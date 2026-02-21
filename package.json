@@ -2,10 +2,25 @@
   "name": "nestjs-backend-api",
   "version": "1.0.0",
   "description": "NestJS Backend API Template for Class Project",
-  "author": "",
+  "author": "N",
   "private": true,
   "license": "MIT",
   "contributors": [
+    {
+      "fullname": "Natthawat Kittanavet",
+      "username": "Natpon",
+      "studentId": "68010372"      
+    },
+    {
+      "fullname": "John Doe",
+      "username": "username1",
+      "studentId": "12345678"
+    },
+    {
+      "fullname": "John Doe",
+      "username": "username1",
+      "studentId": "12345678"
+    },
     {
       "fullname": "John Doe",
       "username": "username1",
@@ -14,10 +29,10 @@
   ],
   "project": {
     "model": {
-      "id": null,
-      "name": null
+      "id": "0",
+      "name": "User & Organization Management"
     },
-    "sumStudentId": null
+    "sumStudentId": 272010930
   },
   "scripts": {
     "build": "nest build",
