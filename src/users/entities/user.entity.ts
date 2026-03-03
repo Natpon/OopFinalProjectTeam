@@ -21,4 +21,25 @@ export class User extends BaseEntity {
         this.lastLoginAt = null;
     }
 
+  updateProfile(name: string, email: string): void {
+    this.fullName = name
+    this.email = email
+    this.markUpdated()
+  }
+
+  activate(): void {
+    this.status = UserStatus.ACTIVE
+  }
+
+  suspend(): void {
+    this.status = UserStatus.SUSPENDED
+  }
+
+  recordLogin(): void {
+    this.lastLoginAt = new Date()
+  }
+
+  isActive(): boolean {
+    return this.status === UserStatus.ACTIVE
+  }
 }
