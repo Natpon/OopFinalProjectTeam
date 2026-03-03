@@ -1,19 +1,45 @@
-import { Entity, Column } from 'typeorm';
-import { BaseEntity } from '../../common/entities/base.entity';
+import { BaseEntity } from '@/common/entities/base.entity';
+import { UserStatus } from '@/common/enums/user-status.enum'
 
-@Entity()
 export class User extends BaseEntity {
+    private email: string;
+    private fullName: string;
+    private status: UserStatus;
+    private lastLoginAt: Date | null;
 
-  @Column()
-  firstName: string;
+    constructor(params: {
+        id: string;
+        email: string;
+        fullName: string;
+        status?: UserStatus;
+    }) {
+        super();
 
-  @Column()
-  lastName: string;
+        this.email = params.email;
+        this.fullName = params.fullName;
+        this.status = params.status ?? UserStatus.ACTIVE;
+        this.lastLoginAt = null;
+    }
 
-  @Column({ unique: true })
-  email: string;
+  updateProfile(name: string, email: string): void {
+    this.fullName = name
+    this.email = email
+    this.markUpdated()
+  }
 
-  @Column()
-  password: string;
+  activate(): void {
+    this.status = UserStatus.ACTIVE
+  }
 
+  suspend(): void {
+    this.status = UserStatus.SUSPENDED
+  }
+
+  recordLogin(): void {
+    this.lastLoginAt = new Date()
+  }
+
+  isActive(): boolean {
+    return this.status === UserStatus.ACTIVE
+  }
 }

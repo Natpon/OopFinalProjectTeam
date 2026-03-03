@@ -1,16 +1,18 @@
-import { PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm' 
+
+import { randomUUID } from 'crypto';
 
 export abstract class BaseEntity {
+  readonly id: string;
+  readonly createdAt: Date;
+  updatedAt: Date;
 
+  constructor() {
+    this.id = randomUUID();
+    this.createdAt = new Date();
+    this.updatedAt = new Date();
+  }
 
-    @PrimaryGeneratedColumn("uuid")
-    id: string;
-
-    @CreateDateColumn()
-    createdAt: Date;
-
-    @UpdateDateColumn()
-    updatedAt: Date;
-    //test
-
-}
+  protected markUpdated(): void {
+    this.updatedAt = new Date();
+  }
+} 
