@@ -2,8 +2,6 @@
 
 <img width="4898" height="4800" alt="image" src="https://github.com/user-attachments/assets/3e8e6f94-458b-4bd5-bd6c-d208ef18bcc5" />
 
-<<<<<<< HEAD
-
 src/
 │
 ├── common/
@@ -51,7 +49,7 @@ src/
 │   └── memberships.service.ts
 │
 └── main.ts
-=======
+
 ```
 src
  ├── main.ts
@@ -97,4 +95,4 @@ src
      ├── memberships.controller.ts
      ├── memberships.service.ts
      └── memberships.module.ts
->>>>>>> 30e6444 (check)
+
