@@ -9,7 +9,7 @@
     {
       "fullname": "Natthawat Kittanavet",
       "username": "Natpon",
-      "studentId": "68010372"      
+      "studentId": "68010372"
     },
     {
       "fullname": "Kankawee Seetalarom",
@@ -53,6 +53,7 @@
     "@nestjs/core": "^10.0.0",
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/swagger": "^7.1.0",
+    "class-validator": "^0.14.4",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1"
   },
