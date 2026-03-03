@@ -1,31 +1,19 @@
-import { UserStatus } from '../../common/enums/user-status.enum'
+import { Entity, Column } from 'typeorm';
+import { BaseEntity } from '../../common/entities/base.entity';
 
-export class User {
-    readonly id: string;
-    readonly createdAt: Date;
-    updatedAt: Date;
+@Entity()
+export class User extends BaseEntity {
 
-    private email: string;
-    private fullName: string;
-    private status: UserStatus;
-    private lastLoginAt: Date | null;
+  @Column()
+  firstName: string;
 
-    constructor(init: {
-        id: string;
-        email: string;
-        fullName: string;
-        status?: UserStatus;
-        createdAt?: Date;
-        updatedAt?: Date;
-        lastLoginAt?: Date | null;
-    }) {
-        this.id = init.id;
-        this.email = init.email;
-        this.fullName = init.fullName;
-        this.status = init.status ?? UserStatus.ACTIVE;
-        this.createdAt = init.createdAt ?? new Date();
-        this.updatedAt = init.updatedAt ?? new Date();
-        this.lastLoginAt = init.lastLoginAt ?? null;
-    }
+  @Column()
+  lastName: string;
+
+  @Column({ unique: true })
+  email: string;
+
+  @Column()
+  password: string;
 
 }
