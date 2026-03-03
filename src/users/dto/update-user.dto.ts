@@ -12,9 +12,9 @@ export class UpdateUserDto {
     @IsOptional()
     @IsString()
     @Length(2, 50)
-    fullName?: string;
+    fullName!: string;
 
     @IsOptional()
     @IsEmail()
-    email?: string;
+    email!: string;
 }
