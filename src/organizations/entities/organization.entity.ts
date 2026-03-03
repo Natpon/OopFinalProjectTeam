@@ -1,34 +1,27 @@
-import { Entity, Column } from 'typeorm';
-import { BaseEntity } from './base-entity.entity'; // ดึงจากไฟล์เดิมที่คุณไม่อยากแก้
+import { BaseEntity } from '@/common/entities/base.entity';
 
-@Entity('organizations')
 export class Organization extends BaseEntity {
-  @Column()
   private name: string;
-
-  @Column()
   private domain: string;
 
-  // --- Methods ตาม Business Rules ใน UML ---
-
-  updateName(name: string): void {
-    if (!name || name.trim() === '') throw new Error("Name is required");
+  constructor(name: string, domain: string) {
+    super(); // เรียกใช้ constructor ของ BaseEntity เพื่อเจน id, createdAt, updatedAt
     this.name = name;
-    // เรียกใช้ markUpdated() ถ้าใน BaseEntity มี (ถ้าไม่มีให้ลบบรรทัดนี้ออก)
-  }
-
-  updateDomain(domain: string): void {
-    if (!domain || !domain.includes('.')) throw new Error("Invalid domain format");
     this.domain = domain;
   }
 
-  isDomainMatch(email: string): boolean {
-    if (!email) return false;
-    return email.endsWith(`@${this.domain}`);
+  updateName(name: string): void {
+    if (!name) throw new Error("Name is required");
+    this.name = name;
+    this.markUpdated(); // เรียกใช้จาก BaseEntity
   }
 
-  // Getter สำหรับดึงค่า private ไปแสดงผล
+  updateDomain(domain: string): void {
+    if (!domain.includes('.')) throw new Error("Invalid domain");
+    this.domain = domain;
+    this.markUpdated();
+  }
+
   getName(): string { return this.name; }
   getDomain(): string { return this.domain; }
 }
-
