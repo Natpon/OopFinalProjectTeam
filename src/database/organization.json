@@ -1,0 +1,67 @@
+[
+  {
+    "id": "org1",
+    "name": "KMITL Dev Club",
+    "slug": "kmitl-dev-club",
+    "domain": "kmitl.ac.th",
+    "description": "Community for developers at KMITL",
+    "logoUrl": "https://cdn.app.com/logo/kmitl.png",
+    "website": "https://kmitl.ac.th",
+    "ownerId": "u1",
+    "status": "ACTIVE",
+    "createdAt": "2026-03-04T10:00:00Z",
+    "updatedAt": "2026-03-04T10:00:00Z"
+  },
+  {
+    "id": "org2",
+    "name": "Bangkok Startup Hub",
+    "slug": "bangkok-startup-hub",
+    "domain": "startuphub.co.th",
+    "description": "Community for startup founders in Bangkok",
+    "logoUrl": "https://cdn.app.com/logo/startuphub.png",
+    "website": "https://startuphub.co.th",
+    "ownerId": "u2",
+    "status": "ACTIVE",
+    "createdAt": "2026-03-04T11:00:00Z",
+    "updatedAt": "2026-03-04T11:00:00Z"
+  },
+  {
+    "id": "org3",
+    "name": "AI Research Group",
+    "slug": "ai-research-group",
+    "domain": "ai-lab.org",
+    "description": "Research organization focused on artificial intelligence",
+    "logoUrl": "https://cdn.app.com/logo/ai-lab.png",
+    "website": "https://ai-lab.org",
+    "ownerId": "u3",
+    "status": "ACTIVE",
+    "createdAt": "2026-03-04T12:00:00Z",
+    "updatedAt": "2026-03-04T12:00:00Z"
+  },
+  {
+    "id": "org4",
+    "name": "Open Source Thailand",
+    "slug": "open-source-thailand",
+    "domain": "opensource.or.th",
+    "description": "Thai community for open source developers",
+    "logoUrl": "https://cdn.app.com/logo/opensource.png",
+    "website": "https://opensource.or.th",
+    "ownerId": "u4",
+    "status": "ACTIVE",
+    "createdAt": "2026-03-04T13:00:00Z",
+    "updatedAt": "2026-03-04T13:00:00Z"
+  },
+  {
+    "id": "org5",
+    "name": "Cloud Engineering Team",
+    "slug": "cloud-engineering-team",
+    "domain": "cloudteam.io",
+    "description": "Engineering team working on cloud infrastructure",
+    "logoUrl": "https://cdn.app.com/logo/cloudteam.png",
+    "website": "https://cloudteam.io",
+    "ownerId": "u5",
+    "status": "ACTIVE",
+    "createdAt": "2026-03-04T14:00:00Z",
+    "updatedAt": "2026-03-04T14:00:00Z"
+  }
+]
