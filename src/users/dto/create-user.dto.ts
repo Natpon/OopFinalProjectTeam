@@ -3,8 +3,8 @@ export class CreateUserDto {
 
     @IsString()
     @Length(2, 50)
-    fullName: string;
+    fullName!: string;
 
     @IsEmail()
-    email: string;
+    email!: string;
 }
