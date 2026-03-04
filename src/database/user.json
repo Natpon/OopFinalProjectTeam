@@ -1,0 +1,29 @@
+[
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "email": "john.doe@example.com",
+    "fullName": "John Doe",
+    "status": "ACTIVE",
+    "lastLoginAt": "2026-03-01T08:00:00.000Z",
+    "createdAt": "2026-01-15T10:00:00.000Z",
+    "updatedAt": "2026-03-01T08:00:00.000Z"
+  },
+  {
+    "id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+    "email": "jane.smith@example.com",
+    "fullName": "Jane Smith",
+    "status": "ACTIVE",
+    "lastLoginAt": "2026-03-02T09:30:00.000Z",
+    "createdAt": "2026-01-20T11:00:00.000Z",
+    "updatedAt": "2026-03-02T09:30:00.000Z"
+  },
+  {
+    "id": "c3d4e5f6-a7b8-9012-cdef-123456789012",
+    "email": "bob.wilson@example.com",
+    "fullName": "Bob Wilson",
+    "status": "SUSPENDED",
+    "lastLoginAt": "2026-02-15T14:00:00.000Z",
+    "createdAt": "2026-02-01T09:00:00.000Z",
+    "updatedAt": "2026-02-15T14:00:00.000Z"
+  }
+]
