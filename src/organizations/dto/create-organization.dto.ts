@@ -1,10 +1,13 @@
+import { IsString, Length, Matches } from 'class-validator';
 
 export class CreateOrganizationDto {
-  name: string;
-  domain: string;
 
-  constructor(param: {name: string, domain: string}) {
-    this.name = param.name;
-    this.domain = param.domain
-  }
+  @IsString()
+  @Length(2, 100)
+  name!: string;
+
+  @IsString()
+  @Matches(/^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)
+  domain!: string;
+
 }
