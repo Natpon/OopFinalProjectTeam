@@ -53,12 +53,9 @@
     "@nestjs/core": "^10.0.0",
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/swagger": "^7.1.0",
-<<<<<<< HEAD
     "@nestjs/typeorm": "^11.0.0",
     "mysql2": "^3.18.2",
-=======
     "class-validator": "^0.14.4",
->>>>>>> PON
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
     "typeorm": "^0.3.28"

@@ -1,37 +1,66 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Put, Patch, Delete, Param, Body } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { ParseIntPipe } from '@nestjs/common';
+import { ApiResponse } from '@/common/interfaces/api-response.interface';
+import { User } from './entities/user.entity';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
-  }
-
   @Get()
-  findAll() {
-    return this.usersService.findAll();
+  findAll(): ApiResponse<User[]> {
+    return {
+      success: true,
+      message: 'Users retrieved successfully',
+      data: this.usersService.findAll(),
+    };
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+  findOne(@Param('id') id: string): ApiResponse<User> {
+    return {
+      success: true,
+      message: 'User retrieved successfully',
+      data: this.usersService.findOne(id),
+    };
   }
-//change to ParseIntPipe because when api shoot PATCH/users/abc it will respond (404 Bad Request)
+
+  @Post()
+  create(@Body() dto: CreateUserDto): ApiResponse<User> {
+    return {
+      success: true,
+      message: 'User created successfully',
+      data: this.usersService.create(dto),
+    };
+  }
+
+  @Put(':id')
+  update(@Param('id') id: string, @Body() dto: UpdateUserDto): ApiResponse<User> {
+    return {
+      success: true,
+      message: 'User updated successfully',
+      data: this.usersService.update(id, dto),
+    };
+  }
+
   @Patch(':id')
-  update(
-    @Param('id' , ParseIntPipe) id: number, 
-    @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(id, updateUserDto);
+  partialUpdate(@Param('id') id: string, @Body() dto: UpdateUserDto): ApiResponse<User> {
+    return {
+      success: true,
+      message: 'User partially updated successfully',
+      data: this.usersService.update(id, dto),
+    };
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.usersService.remove(+id);
+  remove(@Param('id') id: string): ApiResponse<null> {
+    this.usersService.remove(id);
+    return {
+      success: true,
+      message: 'User deleted successfully',
+      data: null,
+    };
   }
 }

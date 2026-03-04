@@ -1,38 +1,53 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { User } from './entities/user.entity';
-import { UserStatus } from '@/common/enums/user-status.enum';
 
 @Injectable()
 export class UsersService {
   private users: User[] = [];
 
-  activateUser(id: string): User {
-    const user = this.findOne(id);
+  findAll(): User[] {
+    return this.users;
+  }
 
-    user.status = UserStatus.ACTIVE;
-    user.updateAt = new Date();
-    
+  findOne(id: string): User {
+    const user = this.users.find(u => u.id === id);
+    if (!user) {
+      throw new NotFoundException(`User with id ${id} not found`);
+    }
     return user;
   }
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+
+  create(dto: CreateUserDto): User {
+    const user = new User({
+      email: dto.email,
+      fullName: dto.fullName,
+      status: dto.status,
+    });
+    this.users.push(user);
+    return user;
   }
 
-  findAll() {
-    return `This action returns all users`;
+  update(id: string, dto: UpdateUserDto): User {
+    const user = this.findOne(id);
+    if (dto.fullName || dto.email) {
+      user.updateProfile(
+        dto.fullName ?? user.getFullName(),
+        dto.email ?? user.getEmail(),
+      );
+    }
+    if (dto.status) {
+      dto.status === 'ACTIVE' ? user.activate() : user.suspend();
+    }
+    return user;
   }
 
-  findOne(id: string) {
-    return `This action returns a #${id} user`;
-  }
-
-  update(id: string, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
-
-  remove(id: string) {
-    return `This action removes a #${id} user`;
+  remove(id: string): void {
+    const index = this.users.findIndex(u => u.id === id);
+    if (index === -1) {
+      throw new NotFoundException(`User with id ${id} not found`);
+    }
+    this.users.splice(index, 1);
   }
 }

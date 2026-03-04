@@ -8,38 +8,52 @@ export class User extends BaseEntity {
     private lastLoginAt: Date | null;
 
     constructor(params: {
-        id: string;
-        email: string;
-        fullName: string;
-        status?: UserStatus;
+      email: string;
+      fullName: string;
+      status?: UserStatus;
     }) {
-        super();
-
-        this.email = params.email;
-        this.fullName = params.fullName;
-        this.status = params.status ?? UserStatus.ACTIVE;
-        this.lastLoginAt = null;
+      super();
+      this.email = params.email;
+      this.fullName = params.fullName;
+      this.status = params.status ?? UserStatus.ACTIVE;
+      this.lastLoginAt = null
     }
 
-  updateProfile(name: string, email: string): void {
-    this.fullName = name
-    this.email = email
-    this.markUpdated()
-  }
+    updateProfile(name: string, email: string): void {
+      this.fullName = name
+      this.email = email
+      this.markUpdated()
+    }
 
-  activate(): void {
-    this.status = UserStatus.ACTIVE
-  }
+    activate(): void {
+      this.status = UserStatus.ACTIVE
+    }
 
-  suspend(): void {
-    this.status = UserStatus.SUSPENDED
-  }
+    suspend(): void {
+      this.status = UserStatus.SUSPENDED
+    }
 
-  recordLogin(): void {
-    this.lastLoginAt = new Date()
-  }
+    recordLogin(): void {
+      this.lastLoginAt = new Date()
+    }
 
-  isActive(): boolean {
-    return this.status === UserStatus.ACTIVE
-  }
+    isActive(): boolean {
+      return this.status === UserStatus.ACTIVE
+    }
+
+    getEmail(): string {
+      return this.email;
+    }
+
+    getFullName(): string {
+      return this.fullName;
+    }
+
+    getStatus(): UserStatus {
+      return this.status;
+    }
+
+    getLastLoginAt(): Date | null {
+      return this.lastLoginAt;
+    }
 }
