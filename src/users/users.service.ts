@@ -2,10 +2,16 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import * as fs from 'fs';
 
 @Injectable()
 export class UsersService {
   private users: User[] = [];
+
+  constructor() {
+    const data = fs.readFileSync('src/database/users.json', 'utf-8');
+    this.users = JSON.parse(data);
+  }
 
   findAll(): User[] {
     return this.users;
@@ -26,7 +32,13 @@ export class UsersService {
       status: dto.status,
     });
     this.users.push(user);
+    
+    fs.writeFileSync(
+    "src/database/users.json",
+    JSON.stringify(this.users, null, 2)
+    );
     return user;
+
   }
 
   update(id: string, dto: UpdateUserDto): User {
