@@ -1,0 +1,132 @@
+import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
+import { readFileSync, writeFileSync } from 'fs';
+import { join } from 'path';
+import { randomUUID } from 'crypto';
+import { Organization } from './entities/organization.entity';
+import { CreateOrganizationDto } from './dto/create-organization.dto';
+import { UpdateOrganizationDto } from './dto/update-organization.dto';
+
+@Injectable()
+export class OrganizationsService {
+  private organizations: Organization[] = [];
+  private readonly filePath = join(process.cwd(), 'src/database/organization.json');
+
+  constructor() {
+    this.loadFromFile();
+  }
+
+  private loadFromFile(): void {
+    try {
+      const data = readFileSync(this.filePath, 'utf-8');
+      const parsed = JSON.parse(data);
+
+      this.organizations = (Array.isArray(parsed) ? parsed : []).map((item) =>
+        this.mapToOrganization(item),
+      );
+    } catch {
+      this.organizations = [];
+    }
+  }
+
+  private mapToOrganization(data: any): Organization {
+    return new Organization(
+      data.id || '',
+      data.name || '',
+      data.domain || '',
+    );
+  }
+
+  private save(): void {
+    const data = this.organizations.map((org) => ({
+      id: org.id,
+      name: org.name,
+      domain: org.domain,
+      createdAt: org.createdAt,
+      updatedAt: org.updatedAt,
+    }));
+
+    writeFileSync(this.filePath, JSON.stringify(data, null, 2), 'utf-8');
+  }
+
+  private generateId(): string {
+    return randomUUID();
+  }
+
+  findAll(): Organization[] {
+    return this.organizations;
+  }
+
+  findOne(id: string): Organization {
+    const organization = this.organizations.find((org) => org.id === id);
+
+    if (!organization) {
+      throw new NotFoundException(`Organization with ID "${id}" not found`);
+    }
+
+    return organization;
+  }
+
+  create(dto: CreateOrganizationDto): Organization {
+    const existingOrg = this.organizations.find(
+      (org) => org.domain === dto.domain.toLowerCase(),
+    );
+
+    if (existingOrg) {
+      throw new BadRequestException(
+        `Organization with domain "${dto.domain}" already exists`,
+      );
+    }
+
+    const organization = new Organization(
+      this.generateId(),
+      dto.name,
+      dto.domain,
+    );
+
+    this.organizations.push(organization);
+    this.save();
+
+    return organization;
+  }
+
+  update(id: string, dto: UpdateOrganizationDto): Organization {
+    const organization = this.findOne(id);
+
+    if (dto.domain) {
+      const domain = dto.domain.toLowerCase();
+
+      if (domain !== organization.domain) {
+        const existingOrg = this.organizations.find(
+          (org) => org.domain === domain,
+        );
+
+        if (existingOrg) {
+          throw new BadRequestException(
+            `Organization with domain "${domain}" already exists`,
+          );
+        }
+
+        organization.updateDomain(domain);
+      }
+    }
+
+    if (dto.name) {
+      organization.updateName(dto.name);
+    }
+
+    organization.markUpdated();
+    this.save();
+
+    return organization;
+  }
+
+  remove(id: string): void {
+    const organization = this.findOne(id);
+
+    this.organizations = this.organizations.filter(
+      (org) => org.id !== organization.id,
+    );
+
+    this.save();
+  }
+}

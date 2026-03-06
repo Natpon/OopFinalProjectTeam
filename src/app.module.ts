@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+/*import { Module } from '@nestjs/common';
 import { UsersModule } from './users/users.module';
 import { OrganizationsModule } from './organizations/organizations.module';
 import { MembershipsModule } from './memberships/memberships.module';
@@ -8,4 +8,16 @@ import { MembershipsModule } from './memberships/memberships.module';
   controllers: [],
   providers: [],
 })
+export class AppModule {}*/
+import { Module } from '@nestjs/common';
+import { UsersModule } from './users/users.module';
+//import { OrganizationsModule } from './organizations/organizations.module';
+import { MembershipsModule } from './memberships/memberships.module';
+
+@Module({
+  imports: [UsersModule,  MembershipsModule],
+  controllers: [],
+  providers: [],
+})
 export class AppModule {}
+

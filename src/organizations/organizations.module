@@ -1,0 +1,34 @@
+import { OrganizationService } from './organization.service';
+import { OrganizationController } from './organization.controller';
+
+/**
+ * OrganizationModule
+ *
+ * Bootstraps the organization feature by wiring the service into the controller.
+ * Plug into your app's root module or DI container as needed.
+ *
+ * NestJS example:
+ *   @Module({
+ *     providers: [OrganizationService],
+ *     controllers: [OrganizationController],
+ *     exports: [OrganizationService],
+ *   })
+ *   export class OrganizationModule {}
+ */
+export class OrganizationModule {
+  readonly service: OrganizationService;
+  readonly controller: OrganizationController;
+
+  constructor() {
+    this.service = new OrganizationService();
+    this.controller = new OrganizationController(this.service);
+  }
+}
+
+// ── Public API ─────────────────────────────────────────────────────
+export { Organization } from './organization.entity';
+export { Membership } from './membership.entity';
+export { OrganizationRole, MembershipStatus } from './organization.enum';
+export * from './organization.dto';
+export { OrganizationService } from './organization.service';
+export { OrganizationController } from './organization.controller';
