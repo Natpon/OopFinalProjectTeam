@@ -1,7 +1,5 @@
 ## PLAN
 
-<img width="4898" height="4800" alt="image" src="https://github.com/user-attachments/assets/3e8e6f94-458b-4bd5-bd6c-d208ef18bcc5" />
-
 ```
 src
 │
@@ -59,3 +57,12 @@ src
 │
 └── main.ts
 ```
+
+*  **Project Information** — ข้อมูลโปรเจค
+  → [`subjects/requirement.md`](subjects/requirement.md)
+*  **Data Model Documentation** — รายละเอียดโปรเจค
+  → [`DATA PROJECT`](docs/data-model.md)
+*  **UML Diagram** — แผนภาพ UML ของ Data
+  → [`UML Diagram`](docs/uml)
+*  **API Specification** — เอากสาร API
+  → [`API Specification`](docs/api.md)
