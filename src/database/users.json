@@ -187,5 +187,26 @@
     "fullName": "Natthawat Kittanavet",
     "status": "ACTIVE",
     "lastLoginAt": null
+  },
+  {
+    "id": "d351f968-0840-4b15-b530-82391f0fefa4",
+    "username": "pon",
+    "email": "pon@test.com",
+    "password": "123456",
+    "displayName": "Pon",
+    "createdAt": "2026-03-07T17:45:55.402Z",
+    "updatedAt": "2026-03-07T17:45:55.402Z"
+  },
+  {
+    "id": "c36db181-b69c-41cc-a56e-488c39127378",
+    "username": "PonNาาHai",
+    "email": "p5odn@test.com",
+    "password": "123456t",
+    "displayName": "Pon",
+    "role": "user",
+    "status": "active",
+    "lastLoginAt": null,
+    "createdAt": "2026-03-07T18:04:02.760Z",
+    "updatedAt": "2026-03-07T18:52:27.585Z"
   }
 ]

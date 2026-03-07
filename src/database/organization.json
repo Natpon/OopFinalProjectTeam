@@ -1,32 +1,41 @@
 [
   {
-    "id": "6dc34a6c-1834-4e71-a305-7b83dbab7f93",
-    "createdAt": "2026-03-07T08:05:35.113Z",
-    "updatedAt": "2026-03-07T08:05:35.113Z",
-    "name": "King Mongkut's Institute of Technology Ladkrabang",
-    "domain": "kmitl.ac.th",
-    "description": "Engineering and technology university in Thailand",
-    "logoUrl": "https://cdn.example.com/logo/kmitl.png",
-    "website": "https://www.kmitl.ac.th"
+    "id": "a3f1c2d4-1e2b-4f3a-9c8d-7b6e5f4a3210",
+    "name": "Acme Corporation",
+    "domain": "acme.com",
+    "ownerId": "d4e5f6a7-b8c9-4d0e-af12-3b4c5d6e7f80",
+    "email": "contact@acme.com",
+    "phone": "+1-800-555-0100",
+    "address": "742 Evergreen Terrace, New York, NY 10001, USA",
+    "plan": "enterprise",
+    "status": "ACTIVE",
+    "createdAt": "2026-01-10T08:30:00.000Z",
+    "updatedAt": "2026-02-15T14:20:00.000Z"
   },
   {
-    "id": "e0472052-1cc5-4b85-a188-d6f5a555a2c7",
-    "createdAt": "2026-03-07T08:05:35.113Z",
-    "updatedAt": "2026-03-07T08:05:35.113Z",
-    "name": "TechNova Corporation",
-    "domain": "company.com",
-    "description": "Global software engineering company",
-    "logoUrl": "https://cdn.example.com/logo/technova.png",
-    "website": "https://www.company.com"
+    "id": "b7c8d9e0-2f3a-4b5c-8d1e-9f0a1b2c3d40",
+    "name": "Bright Solutions Ltd",
+    "domain": "brightsolutions.io",
+    "ownerId": "e5f6a7b8-c9d0-4e1f-b023-4c5d6e7f8a90",
+    "email": "hello@brightsolutions.io",
+    "phone": "+44-20-7946-0958",
+    "address": "12 Innovation Park, London, EC1A 1BB, UK",
+    "plan": "pro",
+    "status": "ACTIVE",
+    "createdAt": "2026-02-01T09:00:00.000Z",
+    "updatedAt": "2026-02-20T11:45:00.000Z"
   },
   {
-    "id": "c266331d-447a-40f8-9e0b-ae50df49569e",
-    "createdAt": "2026-03-07T08:05:35.113Z",
-    "updatedAt": "2026-03-07T08:05:35.113Z",
-    "name": "LaunchLab Startup",
-    "domain": "startup.io",
-    "description": "Early-stage startup accelerator and tech lab",
-    "logoUrl": "https://cdn.example.com/logo/launchlab.png",
-    "website": "https://www.startup.io"
+    "id": "c1d2e3f4-a5b6-4c7d-9e8f-0a1b2c3d4e50",
+    "name": "NovaTech Startup",
+    "domain": "novatech.dev",
+    "ownerId": "f6a7b8c9-d0e1-4f2a-c134-5d6e7f8a9b00",
+    "email": "founders@novatech.dev",
+    "phone": "+49-30-12345678",
+    "address": "Unter den Linden 77, 10117 Berlin, Germany",
+    "plan": "free",
+    "status": "PENDING",
+    "createdAt": "2026-03-01T07:15:00.000Z",
+    "updatedAt": "2026-03-01T07:15:00.000Z"
   }
 ]
