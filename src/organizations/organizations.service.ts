@@ -9,10 +9,20 @@ export class OrganizationsService {
   private organizations: Organization[] = [];
 
   constructor() {
-    const data = fs.readFileSync('src/database/organization.json', 'utf-8');
-    this.organizations = JSON.parse(data);
-  }
+  const data = fs.readFileSync('src/database/organization.json', 'utf-8');
+  const parsed = JSON.parse(data);
 
+  this.organizations = parsed.map(
+    (o: any) =>
+      new Organization(
+        o.name,
+        o.domain,
+        o.description,
+        o.logoUrl,
+        o.website,
+      ),
+  );
+}
   private save(): void {
     fs.writeFileSync(
       'src/database/organization.json',
@@ -69,10 +79,10 @@ export class OrganizationsService {
   }
 
   if (dto.domain !== undefined) {
-    const domain = dto.domain.toLowerCase().trim();
+    const domain = dto.domain.trim().toLowerCase();
 
     const exists = this.organizations.find(
-      o => o.domain.toLowerCase() === domain && o.id !== id,
+      o => o.domain === domain && o.id !== id,
     );
 
     if (exists) {
@@ -96,7 +106,8 @@ export class OrganizationsService {
     org.updateWebsite(dto.website);
   }
 
-  this.save();
+  this.save();   
+
   return org;
 }
   remove(id: string): void {
