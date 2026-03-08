@@ -58,4 +58,9 @@ export class MembershipService {
 
     return { message: `Membership "${id}" successfully removed.` };
   }
+  // 🌟 เพิ่มฟังก์ชันนี้เข้าไปใน MembershipService
+  async findByUser(userId: string): Promise<Membership[]> { // <-- อาจจะต้องใส่ Type : Promise<Membership[]> ด้วย
+    return this.repository.findByUser(userId); 
+    // หมายเหตุ: ชื่อตัวแปร membershipRepository อาจจะต่างกัน ขึ้นอยู่กับว่าใน constructor ของ Service คุณตั้งชื่อว่าอะไร
+  }
 }
