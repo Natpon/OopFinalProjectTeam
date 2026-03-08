@@ -4,7 +4,7 @@ import { promises as fs } from 'fs';
 import * as path from 'path';
 import { Membership } from './entities/membership.entity';
 
-const DB_PATH = path.join(process.cwd(), 'src', 'database', 'memberships.json');
+const DB_PATH = path.join(process.cwd(), 'src', 'database', 'membership.json');
 
 @Injectable()
 export class MembershipRepository {

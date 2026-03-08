@@ -28,7 +28,7 @@
   {
     "id": "f8e7d6c5-b4a3-4c2d-9e1f-0a2b4c6d8e9f",
     "createdAt": "2026-03-01T12:30:00.000Z",
-    "updatedAt": "2026-03-01T12:30:00.000Z",
+    "updatedAt": "2026-03-08T11:23:14.762Z",
     "name": "Quantum Dynamics",
     "domain": "quantumdynamics.net",
     "ownerId": "d3d04e53-1f6a-4c8d-ae4f-5f7a9b1c3d4e",
@@ -62,6 +62,19 @@
     "phone": "+1-212-555-0199",
     "address": "Wall St, New York, NY, USA",
     "plan": "pro",
+    "status": "ACTIVE"
+  },
+  {
+    "id": "50a5f87f-0e98-4079-99bf-78f1497a25da",
+    "createdAt": "2026-03-08T12:49:17.475Z",
+    "updatedAt": "2026-03-08T12:51:13.297Z",
+    "name": "TPSSSS",
+    "domain": "tps.ac.th",
+    "ownerId": "01c76184-2c05-4c18-a782-5bced997a867",
+    "email": "dddddddddddd@tps.ac.th",
+    "phone": "0999999999",
+    "address": "test",
+    "plan": "School",
     "status": "ACTIVE"
   }
 ]
