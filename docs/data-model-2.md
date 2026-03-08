@@ -49,7 +49,7 @@ User → Membership → Organization
     - `username`
     - `email`
     - `status`
-    - `roel`
+    - `role`
 
 ## Properties
 
@@ -103,8 +103,8 @@ User → Membership → Organization
 
 Membership เก็บข้อมูลเกี่ยวกับการเป็นสมาชิก เช่น role และสถานะของสมาชิก
 - เพิ่ม / ลบ / แก้ไข membership ของผู้ใช้ในองค์กร
-- สามารถดึงข้อมูล membership ตาม user หรือ orhanization ได้
-- ป้องหกันการสร้าง membership ซ้ำ
+- สามารถดึงข้อมูล membership ตาม user หรือ organization ได้
+- ป้องกันการสร้าง membership ซ้ำ
 
 
 ## Properties
