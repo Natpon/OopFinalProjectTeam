@@ -31,11 +31,16 @@ export class OrganizationController {
   ) {}
 
   @Get()
-  async findAll(): Promise<Organization[]> {
-    return this.organizationService.findAll();
+  async findAll(): Promise<ApiResponse<Organization[]>> {
+    const data = await this.organizationService.findAll();
+    return {
+      success: true,
+      message: 'Organizations retrieved successfully',
+      data,
+    };
   }
 
-  // 🌟 3. เพิ่ม Endpoint สำหรับดึงสมาชิกขององค์กร
+  // 🌟 3. เพิ่ม Endpoint
   /*@Get(':id/members')
   async getMembers(@Param('id') id: string) {
     console.log(`fetching members for organization: ${id}`);
@@ -45,7 +50,6 @@ export class OrganizationController {
     return members;
   }*/
 
-    // สมมติว่าเป็นโค้ดใน OrganizationController
   // สมมติว่าเป็นโค้ดใน OrganizationController
 
 @Get(':id/members')
@@ -81,8 +85,13 @@ async getMembers(@Param('id') id: string) {
 
  
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<Organization> {
-    return this.organizationService.findOne(id);
+  async findOne(@Param('id') id: string): Promise<ApiResponse<Organization>> {
+    const data = await this.organizationService.findOne(id);
+    return {
+      success: true,
+      message: 'Organization retrieved successfully',
+      data,
+    };
   }
 
   /**
@@ -93,8 +102,13 @@ async getMembers(@Param('id') id: string) {
   @HttpCode(HttpStatus.CREATED)
   async create(
     @Body() createOrganizationDto: CreateOrganizationDto,
-  ): Promise<Organization> {
-    return this.organizationService.create(createOrganizationDto);
+  ): Promise<ApiResponse<Organization>> {
+    const data = await this.organizationService.create(createOrganizationDto);
+    return {
+      success: true,
+      message: 'Organization created successfully',
+      data,
+    };
   }
 
   /**
@@ -105,8 +119,13 @@ async getMembers(@Param('id') id: string) {
   async update(
     @Param('id') id: string,
     @Body() updateOrganizationDto: UpdateOrganizationDto,
-  ): Promise<Organization> {
-    return this.organizationService.update(id, updateOrganizationDto);
+  ): Promise<ApiResponse<Organization>> {
+    const data = await this.organizationService.update(id, updateOrganizationDto);
+    return {
+      success: true,
+      message: 'Organization updated successfully',
+      data,
+    };
   }
 
   /**
@@ -115,7 +134,12 @@ async getMembers(@Param('id') id: string) {
    */
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
-  async remove(@Param('id') id: string): Promise<{ message: string }> {
-    return this.organizationService.remove(id);
+  async remove(@Param('id') id: string): Promise<ApiResponse<null>> {
+    const result = await this.organizationService.remove(id);
+    return {
+      success: true,
+      message: result.message,
+      data: null,
+    };
   }
 }
