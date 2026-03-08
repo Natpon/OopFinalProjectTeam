@@ -3,7 +3,7 @@ import { promises as fs } from 'fs';
 import * as path from 'path';
 import { Organization } from '../organization/entities/organization.entity';
 
-const DB_PATH = path.join(process.cwd(),  'src', 'database', 'organization.json');
+const DB_PATH = path.join(process.cwd(), 'src', 'database', 'organization.json');
 
 @Injectable()
 export class OrganizationRepository {

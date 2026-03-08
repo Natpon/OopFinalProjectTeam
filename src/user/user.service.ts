@@ -7,7 +7,7 @@ import { QueryUserDto } from './dto/query-user.dto';
 import { UserResponseDto } from './dto/user-response.dto';
 import * as bcrypt from 'bcrypt';
 import { promises as fs } from 'fs';
-import { join } from 'path';    
+import { join } from 'path';
 import { UserRepository } from './user.repository';
 import { User } from './entities/user.entity';
 import { UserRole } from './enums/user-role.enum';
@@ -18,68 +18,68 @@ export class UserService {
 
   constructor(
     private readonly userRepository: UserRepository,
-  ) {}
+  ) { }
 
-  
-async create(dto: CreateUserDto): Promise<UserResponseDto> {
 
-  const users = await this.userRepository.findAll();
+  async create(dto: CreateUserDto): Promise<UserResponseDto> {
 
-  if (users.some((u: User): boolean => u.email === dto.email)) {
-    throw new ConflictException('Email already exists');
+    const users = await this.userRepository.findAll();
+
+    if (users.some((u: User): boolean => u.email === dto.email)) {
+      throw new ConflictException('Email already exists');
+    }
+
+    if (users.some((u: User): boolean => u.username === dto.username)) {
+      throw new ConflictException('Username already exists');
+    }
+
+    const hashedPassword = await bcrypt.hash(dto.password, 10);
+
+    const user: User = {
+      id: randomUUID(),
+      ...dto,
+      role: UserRole.USER,
+      status: UserStatus.ACTIVE,
+      lastLoginAt: null,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+
+    await this.userRepository.save(user);
+
+    return this.toResponse(user);
   }
-
-  if (users.some((u: User): boolean => u.username === dto.username)) {
-    throw new ConflictException('Username already exists');
-  }
-
-  const hashedPassword = await bcrypt.hash(dto.password, 10);
-
-  const user: User = {
-  id: randomUUID(),
-  ...dto,
-  role: UserRole.USER,
-  status: UserStatus.ACTIVE,
-  lastLoginAt: null,
-  createdAt: new Date(),
-  updatedAt: new Date(),
-};
-
-  await this.userRepository.save(user);
-
-  return this.toResponse(user);
-}
 
   async findAll(query: QueryUserDto): Promise<UserResponseDto[]> {
 
-  const { search } = query;
+    const { search } = query;
 
-  let users = await this.userRepository.findAll();
+    let users = await this.userRepository.findAll();
 
-  if (search) {
-    const s = search.toLowerCase();
-    users = users.filter((u: User) =>
-      u.username.toLowerCase().includes(s) ||
-      u.displayName.toLowerCase().includes(s) ||
-      u.email.toLowerCase().includes(s)
-    );
+    if (search) {
+      const s = search.toLowerCase();
+      users = users.filter((u: User) =>
+        u.username.toLowerCase().includes(s) ||
+        u.displayName.toLowerCase().includes(s) ||
+        u.email.toLowerCase().includes(s)
+      );
+    }
+
+    return users.map((u: User) => this.toResponse(u));
   }
-
-  return users.map((u: User) => this.toResponse(u));
-}
 
   async findOne(id: string): Promise<UserResponseDto> {
 
-  const users = await this.userRepository.findAll();
+    const users = await this.userRepository.findAll();
 
-  const user = users.find((u: User) => u.id === id);
+    const user = users.find((u: User) => u.id === id);
 
-  if (!user) {
-    throw new NotFoundException('User not found');
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    return this.toResponse(user);
   }
-
-  return this.toResponse(user);
-}
 
   async update(id: string, dto: UpdateUserDto): Promise<UserResponseDto> {
 

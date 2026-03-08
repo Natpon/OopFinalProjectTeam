@@ -1,10 +1,10 @@
-// src/membership/membership.repository.ts
+
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { promises as fs } from 'fs';
 import * as path from 'path';
 import { Membership } from './entities/membership.entity';
 
-const DB_PATH = path.join(process.cwd(), 'database', 'membership.json');
+const DB_PATH = path.join(process.cwd(), 'src', 'database', 'membership.json');
 
 @Injectable()
 export class MembershipRepository {

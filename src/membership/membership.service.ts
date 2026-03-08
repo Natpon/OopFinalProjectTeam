@@ -7,12 +7,12 @@ import { Membership } from './entities/membership.entity';
 
 @Injectable()
 export class MembershipService {
-  constructor(private readonly repository: MembershipRepository) {}
+  constructor(private readonly repository: MembershipRepository) { }
 
   async create(dto: CreateMembershipDto): Promise<Membership> {
     const memberships = await this.repository.findAll();
-    
-    // Rule: Prevent duplicate membership
+
+
     const alreadyExists = memberships.find(
       (m) => m.userId === dto.userId && m.organizationId === dto.organizationId
     );
@@ -57,5 +57,10 @@ export class MembershipService {
     await this.repository.saveAll(memberships);
 
     return { message: `Membership "${id}" successfully removed.` };
+  }
+
+  async findByUser(userId: string): Promise<Membership[]> {
+    return this.repository.findByUser(userId);
+
   }
 }

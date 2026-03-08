@@ -1,379 +1,231 @@
-# NestJS Users API
+# เอกสาร API รวม
 
-Simple REST API built with NestJS for managing users.
+เอกสารนี้รวม endpoint ของทั้ง 3 โมดูลในโปรเจกต์:
 
----
+- User
+- Organization
+- Membership
 
-# Project Overview
+## Base URL
 
-This project provides a RESTful API to manage users including:
+`http://localhost:3000`
 
-* Create users
-* Retrieve users
-* Update users
-* Delete users
+## Swagger
 
-The API follows standard REST conventions and returns responses in a consistent format.
+`http://localhost:3000/api`
 
----
+## หมายเหตุร่วม
 
-# Tech Stack
-
-* Node.js
-* NestJS
-* TypeScript
-
----
-
-# Installation
-
-Clone the repository
-
-```
-git clone <repository-url>
-```
-
-Install dependencies
-
-```
-npm install
-```
-
-Run the server
-
-```
-npm run start
-```
-
-For development mode
-
-```
-npm run start:dev
-```
-
----
-
-# Base URL
-
-```
-http://localhost:3000
-```
-
----
-
-# Response Format
-
-All API responses follow this structure.
-
-```json
-{
-  "success": true,
-  "message": "string",
-  "data": {}
-}
-```
-
-| Field   | Type    | Description                             |
-| ------- | ------- | --------------------------------------- |
-| success | boolean | Indicates if the request was successful |
-| message | string  | Description of the result               |
-| data    | any     | Response payload                        |
-
----
-
-# Error Response
-
-Example error response.
+- ระบบใช้ NestJS global validation (`ValidationPipe`) พร้อม `whitelist`, `forbidNonWhitelisted`, `transform`
+- หลาย endpoint ส่งกลับเป็น object/array โดยตรง (ไม่ได้ครอบด้วย `success/message/data`)
+- Error format ใช้รูปแบบมาตรฐานของ NestJS
 
 ```json
 {
   "statusCode": 404,
-  "message": "User with id 1 not found",
+  "message": "Not Found",
   "error": "Not Found"
 }
 ```
 
-Common HTTP status codes.
-
-| Status Code | Meaning               |
-| ----------- | --------------------- |
-| 200         | Success               |
-| 201         | Created               |
-| 400         | Bad request           |
-| 404         | Resource not found    |
-| 500         | Internal server error |
-
 ---
 
-# Users API
+# User API
 
-Base route
+## Base Route
 
-```
-/users
-```
+`/user`
 
----
+## 1) สร้างผู้ใช้
 
-# Get All Users
+- Endpoint: `POST /user`
+- Validation หลัก:
+- `username`: string, 3-30 ตัวอักษร
+- `email`: อีเมลที่ถูกต้อง
+- `password`: string, อย่างน้อย 6
+- `displayName`: string, 2-50 ตัวอักษร
+- Error ที่พบบ่อย:
+- `409 Conflict`: `Email already exists`
+- `409 Conflict`: `Username already exists`
 
-Retrieve all users.
-
-### Endpoint
-
-```
-GET /users
-```
-
-### Example Request
-
-```
-curl -X GET http://localhost:3000/users
-```
-
-### Response
+ตัวอย่าง Request:
 
 ```json
 {
-  "success": true,
-  "message": "Users retrieved successfully",
-  "data": [
-    {
-      "id": "1",
-      "name": "John Doe",
-      "email": "john@example.com"
-    }
-  ]
+  "username": "john_doe",
+  "email": "john@example.com",
+  "password": "secret123",
+  "displayName": "John Doe"
+}
+```
+
+## 2) ดึงผู้ใช้ทั้งหมด
+
+- Endpoint: `GET /user`
+- Query (optional): `search`
+
+## 3) ดึงผู้ใช้ตาม ID
+
+- Endpoint: `GET /user/:id`
+- Error ที่พบบ่อย: `404 Not Found` (`User not found`)
+
+## 4) อัปเดตผู้ใช้ (บางส่วน)
+
+- Endpoint: `PATCH /user/:id`
+- Field ที่อัปเดตได้:
+- `username`, `email`, `password`, `displayName`, `avatarUrl`, `phoneNumber`
+- Error ที่พบบ่อย:
+- `404 Not Found`
+- `409 Conflict` (email/username ซ้ำ)
+
+## 5) ลบผู้ใช้
+
+- Endpoint: `DELETE /user/:id`
+- สำเร็จแล้วไม่มี response body (`void`)
+
+---
+
+# Organization API
+
+## Base Route
+
+`/organization`
+
+## 1) สร้างองค์กร
+
+- Endpoint: `POST /organization`
+- Validation หลัก:
+- `name`: string และห้ามว่าง
+- `domain`: string
+- `ownerId`: UUID
+- `email`: อีเมลที่ถูกต้อง
+- `phone`: string
+- `address`: string
+- `plan`: string
+- `status`: enum `OrganizationStatus`
+
+ค่า `status` ที่รองรับ:
+
+- `ACTIVE`
+- `INACTIVE`
+- `SUSPENDED`
+- `PENDING`
+
+ตัวอย่าง Request:
+
+```json
+{
+  "name": "TechNova",
+  "domain": "technova.io",
+  "ownerId": "b1b82c31-9f4e-4a6b-8c2d-3d5e7f9a1b2c",
+  "email": "hello@technova.io",
+  "phone": "+1-415-555-0198",
+  "address": "Market St, San Francisco, CA, USA",
+  "plan": "pro",
+  "status": "ACTIVE"
+}
+```
+
+## 2) ดึงองค์กรทั้งหมด
+
+- Endpoint: `GET /organization`
+
+## 3) ดึงองค์กรตาม ID
+
+- Endpoint: `GET /organization/:id`
+- Error ที่พบบ่อย: `404 Not Found` (`Organization with ID "<id>" not found.`)
+
+## 4) ดึงสมาชิกขององค์กร
+
+- Endpoint: `GET /organization/:id/members`
+
+## 5) อัปเดตองค์กร (บางส่วน)
+
+- Endpoint: `PATCH /organization/:id`
+- Field ที่อัปเดตได้:
+- `name`, `domain`, `ownerId`, `email`, `phone`, `address`, `plan`, `status`
+
+## 6) ลบองค์กร
+
+- Endpoint: `DELETE /organization/:id`
+- ตัวอย่าง response:
+
+```json
+{
+  "message": "Organization \"<id>\" has been successfully removed."
 }
 ```
 
 ---
 
-# Get User by ID
+# Membership API
 
-Retrieve a specific user.
+## Base Route
 
-### Endpoint
+- `/memberships`
+- `/organizations/:id/members`
 
-```
-GET /users/:id
-```
+## 1) เพิ่มสมาชิกเข้าองค์กร
 
-### Example Request
+- Endpoint: `POST /memberships`
+- Validation หลัก:
+- `userId`: UUID และห้ามว่าง
+- `organizationId`: UUID และห้ามว่าง
+- `role`: enum `MembershipRole`
+- `status`: string (optional)
+- `invitedBy`: UUID (optional)
+- `permissions`: string[] (optional)
+- Rule สำคัญ:
+- ถ้า `userId + organizationId` ซ้ำ จะตอบ `409 Conflict`
 
-```
-curl -X GET http://localhost:3000/users/1
-```
+ค่า `role` ที่รองรับ:
 
-### Response
+- `owner`
+- `admin`
+- `member`
+- `guest`
+
+ตัวอย่าง Request:
 
 ```json
 {
-  "success": true,
-  "message": "User retrieved successfully",
-  "data": {
-    "id": "1",
-    "name": "John Doe",
-    "email": "john@example.com"
-  }
+  "userId": "b1b82c31-9f4e-4a6b-8c2d-3d5e7f9a1b2c",
+  "organizationId": "d71f6a2b-8c4e-4f3b-9d1a-6e5c8f2b7a3d",
+  "role": "member",
+  "status": "ACTIVE",
+  "invitedBy": "a6a37b86-4c9d-4f1a-d17c-8c0d2e4f6a7b",
+  "permissions": ["read"]
+}
+```
+
+## 2) ดึงสมาชิกทั้งหมดขององค์กร
+
+- Endpoint: `GET /organizations/:id/members`
+
+## 3) อัปเดตสมาชิก (บางส่วน)
+
+- Endpoint: `PATCH /memberships/:id`
+- Field ที่อัปเดตได้:
+- `userId`, `organizationId`, `role`, `status`, `invitedBy`, `permissions`
+- Error ที่พบบ่อย:
+- `404 Not Found` (`Membership with ID "<id>" not found.`)
+
+## 4) ลบสมาชิก
+
+- Endpoint: `DELETE /memberships/:id`
+- ตัวอย่าง response:
+
+```json
+{
+  "message": "Membership \"<id>\" successfully removed."
 }
 ```
 
 ---
 
-# Create User
+## Quick Start
 
-Create a new user.
-
-### Endpoint
-
-```
-POST /users
-```
-
-### Example Request
-
-```
-curl -X POST http://localhost:3000/users \
--H "Content-Type: application/json" \
--d '{
-  "name": "John Doe",
-  "email": "john@example.com"
-}'
-```
-
-### Request Body
-
-```json
-{
-  "name": "John Doe",
-  "email": "john@example.com"
-}
-```
-
-### Response
-
-```json
-{
-  "success": true,
-  "message": "User created successfully",
-  "data": {
-    "id": "1",
-    "name": "John Doe",
-    "email": "john@example.com"
-  }
-}
-```
-
----
-
-# Update User
-
-Update a user completely.
-
-### Endpoint
-
-```
-PUT /users/:id
-```
-
-### Example Request
-
-```
-curl -X PUT http://localhost:3000/users/1 \
--H "Content-Type: application/json" \
--d '{
-  "name": "Updated Name",
-  "email": "updated@example.com"
-}'
-```
-
-### Response
-
-```json
-{
-  "success": true,
-  "message": "User updated successfully",
-  "data": {
-    "id": "1",
-    "name": "Updated Name",
-    "email": "updated@example.com"
-  }
-}
-```
-
----
-
-# Partially Update User
-
-Update specific fields of a user.
-
-### Endpoint
-
-```
-PATCH /users/:id
-```
-
-### Example Request
-
-```
-curl -X PATCH http://localhost:3000/users/1 \
--H "Content-Type: application/json" \
--d '{
-  "name": "Updated Name"
-}'
-```
-
-### Response
-
-```json
-{
-  "success": true,
-  "message": "User partially updated successfully",
-  "data": {
-    "id": "1",
-    "name": "Updated Name",
-    "email": "john@example.com"
-  }
-}
-```
-
----
-
-# Delete User
-
-Delete a user.
-
-### Endpoint
-
-```
-DELETE /users/:id
-```
-
-### Example Request
-
-```
-curl -X DELETE http://localhost:3000/users/1
-```
-
-### Response
-
-```json
-{
-  "success": true,
-  "message": "User deleted successfully",
-  "data": null
-}
-```
-
----
-
-# Project Structure
-
-```
-src
- ├── users
- │   ├── dto
- │   │   ├── create-user.dto.ts
- │   │   └── update-user.dto.ts
- │   │
- │   ├── entities
- │   │   └── user.entity.ts
- │   │
- │   ├── users.controller.ts
- │   └── users.service.ts
- │
- ├── common
- │   └── interfaces
- │       └── api-response.interface.ts
- │
- └── main.ts
-```
-
----
-
-# Running the Application
-
-Start the application
-
-```
-npm run start
-```
-
-Development mode
-
-```
+```bash
+npm install
 npm run start:dev
 ```
-
-Build the project
-
-```
-npm run build
-```
-
----
-
-# Author
-
-Backend API built with NestJS.
