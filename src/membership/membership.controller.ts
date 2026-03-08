@@ -13,10 +13,10 @@ export class MembershipController {
     return this.membershipService.create(createMembershipDto);
   }
 
-  @Get('organizations/:id/members')
+  /*@Get('organizations/:id/members')
   listOrganizationMembers(@Param('id') id: string) {
     return this.membershipService.listOrganizationMembers(id);
-  }
+  }*/
 
   @Patch('memberships/:id')
   update(@Param('id') id: string, @Body() updateMembershipDto: UpdateMembershipDto) {
