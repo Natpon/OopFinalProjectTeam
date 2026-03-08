@@ -1,85 +1,31 @@
-// src/membership/membership.controller.ts
-/*import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { MembershipService } from './membership.service';
-import { CreateMembershipDto } from './dto/create-membership.dto';
-import { UpdateMembershipDto } from './dto/update-membership.dto';
-import { ApiResponse } from '../common/interfaces/api-response.interface';
 
-@Controller() 
-export class MembershipController {
-  constructor(private readonly membershipService: MembershipService) {}
-
-  @Post('memberships')
-  async create(@Body() createMembershipDto: CreateMembershipDto): Promise<ApiResponse<any>> {
-    const data = await this.membershipService.create(createMembershipDto);
-    return {
-      success: true,
-      message: 'Membership created successfully',
-      data,
-    };
-  }
-
-  /*@Get('organizations/:id/members')
-  listOrganizationMembers(@Param('id') id: string) {
-    return this.membershipService.listOrganizationMembers(id);
-  }
-
-  @Patch('memberships/:id')
-  async update(@Param('id') id: string, @Body() updateMembershipDto: UpdateMembershipDto): Promise<ApiResponse<any>> {
-    const data = await this.membershipService.update(id, updateMembershipDto);
-    return {
-      success: true,
-      message: 'Membership updated successfully',
-      data,
-    };
-  }
-
-  @Delete('memberships/:id')
-  async remove(@Param('id') id: string): Promise<ApiResponse<null>> {
-    const result = await this.membershipService.remove(id);
-    return {
-      success: true,
-      message: result.message,
-      data: null,
-    };
-  }
-}*/
-// src/membership/membership.controller.ts
 import { Controller, Get, Post, Body, Patch, Param, Delete, Inject, forwardRef } from '@nestjs/common';
 import { MembershipService } from './membership.service';
 import { CreateMembershipDto } from './dto/create-membership.dto';
 import { UpdateMembershipDto } from './dto/update-membership.dto';
-
-// 🌟 1. Import OrganizationService
 import { OrganizationService } from '@/organization/organization.service';
 
-@Controller() 
+@Controller()
 export class MembershipController {
   constructor(
     private readonly membershipService: MembershipService,
-    // 🌟 2. Inject OrganizationService เข้ามาใช้งาน (ต้องใช้ forwardRef คู่กันด้วย)
     @Inject(forwardRef(() => OrganizationService))
     private readonly organizationService: OrganizationService,
-  ) {}
+  ) { }
 
-  // 🌟 3. เพิ่ม Endpoint สำหรับดูว่า "User คนนี้ทำงานที่บริษัทไหนบ้าง"
   @Get('memberships/user/:userId')
   async getUserMemberships(@Param('userId') userId: string) {
-    // 3.1 ดึงประวัติว่าคนนี้มีกี่บัตรพนักงาน (ใช้ findByUser)
     const memberships = await this.membershipService.findByUser(userId);
-
-    // 3.2 ทำการ Join เอาข้อมูลบริษัทมาแปะ
     const result = await Promise.all(
       memberships.map(async (member) => {
-        // ไปค้นหาข้อมูลบริษัทจาก ID
         const orgInfo = await this.organizationService.findOne(member.organizationId);
-        
+
         return {
           id: member.id,
           role: member.role,
           status: member.status,
           joinedAt: member.joinedAt,
-          organization: { // 👈 ประกอบร่างเอาข้อมูลบริษัทใส่เข้าไป
+          organization: {
             id: orgInfo.id,
             name: orgInfo.name,
             domain: orgInfo.domain,
@@ -105,5 +51,5 @@ export class MembershipController {
     return this.membershipService.remove(id);
   }
 
-  // ... โค้ด create, update, remove ด้านล่างปล่อยไว้เหมือนเดิมครับ
+
 }

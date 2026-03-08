@@ -1,19 +1,19 @@
-// src/membership/dto/create-membership.dto.ts
+
 import { IsUUID, IsString, IsOptional, IsArray, IsNotEmpty, IsEnum } from 'class-validator';
 import { MembershipRole } from '../enums/membership-role.enum';
 
 export class CreateMembershipDto {
   @IsUUID()
   @IsNotEmpty()
-  userId!: string; // <-- Added !
+  userId!: string;
 
   @IsUUID()
   @IsNotEmpty()
-  organizationId!: string; // <-- Added !
+  organizationId!: string;
 
   @IsEnum(MembershipRole)
   @IsNotEmpty()
-  role!: MembershipRole; // <-- Added ! AND changed from string to MembershipRole
+  role!: MembershipRole;
 
   @IsString()
   @IsOptional()
