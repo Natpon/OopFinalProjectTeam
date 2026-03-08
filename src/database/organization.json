@@ -15,14 +15,14 @@
   {
     "id": "b2c5d8e1-9f4a-4b6c-8e2d-7f1a3b5c9d0e",
     "createdAt": "2026-03-01T12:15:00.000Z",
-    "updatedAt": "2026-03-01T12:15:00.000Z",
+    "updatedAt": "2026-03-08T06:41:28.065Z",
     "name": "GreenLeaf Solutions",
     "domain": "greenleaf.co",
     "ownerId": "c2c93d42-0e5f-4b7c-9d3e-4e6f8a0b2c3d",
     "email": "contact@greenleaf.co",
     "phone": "+44-20-7946-0958",
     "address": "Shoreditch High St, London, UK",
-    "plan": "enterprise",
+    "plan": "Enterprise",
     "status": "ACTIVE"
   },
   {
