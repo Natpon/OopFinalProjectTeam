@@ -194,9 +194,9 @@ interface ApiResponse<T> {
 
 ### เอกสารทางเทคนิค (ต้องจัดทำ)
 
-* 🔌 **API Specification (Swagger)** — เอกสาร API ทุก Endpoint
-* 🧱 **Data Model Documentation** — เอกสารอธิบาย Data Model
-* 📊 **UML Diagram** — แผนภาพ UML ของ Data Model
+* 🔌 **['API Specification (Swagger)']**(docs/api.md) — เอกสาร API ทุก Endpoint
+* 🧱 **Data Model Documentation**(docs/data-model.md) — เอกสารอธิบาย Data Model
+* 📊 **UML Diagram**(uml.png) — แผนภาพ UML ของ Data Model
 
 ---
 
