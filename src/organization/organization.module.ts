@@ -1,12 +1,14 @@
-// organization/organization.module.ts
-
 import { Module } from '@nestjs/common';
-import { OrganizationController } from './organization.controller';
 import { OrganizationService } from './organization.service';
+import { OrganizationController } from './organization.controller';
+import { OrganizationRepository } from './organization.repository'; // <-- 1. Import it
 
 @Module({
   controllers: [OrganizationController],
-  providers: [OrganizationService],
-  exports: [OrganizationService], // export if other modules need it
+  providers: [
+    OrganizationService, 
+    OrganizationRepository // <-- 2. Add it to providers
+  ],
+  exports: [OrganizationService]
 })
 export class OrganizationModule {}
