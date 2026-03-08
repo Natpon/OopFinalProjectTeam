@@ -5,7 +5,7 @@ import { User } from './entities/user.entity';
 @Injectable()
 export class UserRepository {
 
-  private filePath = join(__dirname, '../../database/users.json');
+  private filePath = join(process.cwd(), './src/database/users.json');
 
   async findAll(): Promise<User[]> {
     const data = await fs.readFile(this.filePath, 'utf8');

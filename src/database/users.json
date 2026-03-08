@@ -238,5 +238,17 @@
     "lastLoginAt": null,
     "createdAt": "2026-03-07T10:30:00.000Z",
     "updatedAt": "2026-03-07T10:30:00.000Z"
+  },
+  {
+    "id": "247714af-c7ad-4743-9b8d-ed5802f6e857",
+    "username": "alice_smith",
+    "email": "alice.smith@example.com",
+    "password": "Password123!",
+    "displayName": "Alice Smith",
+    "role": "user",
+    "status": "active",
+    "lastLoginAt": null,
+    "createdAt": "2026-03-08T08:49:12.276Z",
+    "updatedAt": "2026-03-08T08:49:12.277Z"
   }
 ]
