@@ -16,6 +16,7 @@ import { OrganizationService } from './organization.service';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
 import { UpdateOrganizationDto } from './dto/update-organization.dto';
 import { Organization } from './entities/organization.entity';
+import { UserService } from '@/user/user.service';
 import { ApiResponse } from '../common/interfaces/api-response.interface';
 
 // 🌟 1. Import MembershipService เข้ามา
@@ -27,6 +28,8 @@ export class OrganizationController {
     private readonly organizationService: OrganizationService,
     // 🌟 2. Inject MembershipService เข้ามาใช้งาน
     private readonly membershipService: MembershipService, 
+    // 🌟 3. Inject UserService เข้ามาใช้งาน
+    private readonly userService: UserService,
   ) {}
 
   @Get()
@@ -39,20 +42,50 @@ export class OrganizationController {
     };
   }
 
-  // 🌟 3. เพิ่ม Endpoint สำหรับดึงสมาชิกขององค์กร
-  @Get(':id/members')
-  async getMembers(@Param('id') id: string): Promise<ApiResponse<any[]>> {
+  // 🌟 3. เพิ่ม Endpoint
+  /*@Get(':id/members')
+  async getMembers(@Param('id') id: string) {
     console.log(`fetching members for organization: ${id}`);
     
     // โยน organizationId ไปให้ MembershipService จัดการค้นหา
-    const data = await this.membershipService.listOrganizationMembers(id);
-    return {
-      success: true,
-      message: 'Organization members retrieved successfully',
-      data,
-    };
-  }
+    const members = await this.membershipService.listOrganizationMembers(id);
+    return members;
+  }*/
 
+  // สมมติว่าเป็นโค้ดใน OrganizationController
+
+@Get(':id/members')
+async getMembers(@Param('id') id: string) {
+  // 1. ดึงข้อมูล Membership มาก่อน (ได้มา 4 ก้อนที่มีแค่ userId)
+  const memberships = await this.membershipService.listOrganizationMembers(id);
+  
+  // 2. เริ่มกระบวนการ Join (ประกอบร่าง)
+  const result = await Promise.all(
+    memberships.map(async (member) => {
+      // 2.1 เอา userId ของแต่ละคน ไปค้นหาชื่อและอีเมลใน UserService
+      const userInfo = await this.userService.findOne(member.userId);
+      
+      // 2.2 คืนค่าก้อนข้อมูลใหม่ ที่เอาข้อมูล Member เดิม มาผสมกับข้อมูล User
+      return {
+        id: member.id,
+        role: member.role,
+        status: member.status,
+        joinedAt: member.joinedAt,
+        permissions: member.permissions,
+        user: { // 👈 สร้างก้อน user แทรกเข้าไปตรงนี้!
+          id: userInfo.id,
+          displayName: userInfo.displayName,
+          email: userInfo.email
+        }
+      };
+    })
+  );
+
+  // 3. ส่งข้อมูลที่ประกอบร่างเสร็จแล้ว กลับไปให้คนที่ยิง API
+  return result; 
+}
+
+ 
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<ApiResponse<Organization>> {
     const data = await this.organizationService.findOne(id);
