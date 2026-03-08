@@ -7,7 +7,7 @@ import { QueryUserDto } from './dto/query-user.dto';
 import { UserResponseDto } from './dto/user-response.dto';
 import * as bcrypt from 'bcrypt';
 import { promises as fs } from 'fs';
-import { join } from 'path';    
+import { join } from 'path'; 
 import { UserRepository } from './user.repository';
 import { User } from './entities/user.entity';
 import { UserRole } from './enums/user-role.enum';
