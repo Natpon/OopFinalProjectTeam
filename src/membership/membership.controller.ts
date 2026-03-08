@@ -1,5 +1,5 @@
 // src/membership/membership.controller.ts
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Patch, Param, Delete } from '@nestjs/common';
 import { MembershipService } from './membership.service';
 import { CreateMembershipDto } from './dto/create-membership.dto';
 import { UpdateMembershipDto } from './dto/update-membership.dto';
@@ -25,6 +25,16 @@ export class MembershipController {
     return {
       success: true,
       message: 'Organization members retrieved successfully',
+      data,
+    };
+  }
+
+  @Put('memberships/:id')
+  async replace(@Param('id') id: string, @Body() createMembershipDto: CreateMembershipDto): Promise<ApiResponse<any>> {
+    const data = await this.membershipService.update(id, createMembershipDto);
+    return {
+      success: true,
+      message: 'Membership replaced successfully',
       data,
     };
   }

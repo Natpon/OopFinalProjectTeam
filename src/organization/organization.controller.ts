@@ -4,6 +4,7 @@ import {
   Controller,
   Get,
   Post,
+  Put,
   Patch,
   Delete,
   Param,
@@ -75,6 +76,23 @@ export class OrganizationController {
     return {
       success: true,
       message: 'Organization created successfully',
+      data,
+    };
+  }
+
+  /**
+   * PUT /organizations/:id
+   * Fully replaces an existing organization.
+   */
+  @Put(':id')
+  async replace(
+    @Param('id') id: string,
+    @Body() createOrganizationDto: CreateOrganizationDto,
+  ): Promise<ApiResponse<Organization>> {
+    const data = await this.organizationService.update(id, createOrganizationDto);
+    return {
+      success: true,
+      message: 'Organization replaced successfully',
       data,
     };
   }
