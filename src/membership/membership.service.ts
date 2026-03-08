@@ -7,12 +7,12 @@ import { Membership } from './entities/membership.entity';
 
 @Injectable()
 export class MembershipService {
-  constructor(private readonly repository: MembershipRepository) {}
+  constructor(private readonly repository: MembershipRepository) { }
 
   async create(dto: CreateMembershipDto): Promise<Membership> {
     const memberships = await this.repository.findAll();
-    
-    // Rule: Prevent duplicate membership
+
+
     const alreadyExists = memberships.find(
       (m) => m.userId === dto.userId && m.organizationId === dto.organizationId
     );
@@ -58,9 +58,9 @@ export class MembershipService {
 
     return { message: `Membership "${id}" successfully removed.` };
   }
-  // 🌟 เพิ่มฟังก์ชันนี้เข้าไปใน MembershipService
-  async findByUser(userId: string): Promise<Membership[]> { // <-- อาจจะต้องใส่ Type : Promise<Membership[]> ด้วย
-    return this.repository.findByUser(userId); 
-    // หมายเหตุ: ชื่อตัวแปร membershipRepository อาจจะต่างกัน ขึ้นอยู่กับว่าใน constructor ของ Service คุณตั้งชื่อว่าอะไร
+
+  async findByUser(userId: string): Promise<Membership[]> {
+    return this.repository.findByUser(userId);
+
   }
 }
