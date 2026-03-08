@@ -16,7 +16,7 @@ import { CreateOrganizationDto } from './dto/create-organization.dto';
 import { UpdateOrganizationDto } from './dto/update-organization.dto';
 import { Organization } from './entities/organization.entity';
 import { UserService } from '@/user/user.service';
-
+import { ApiResponse } from '@/common/interfaces/api-response.interface';
 // 🌟 1. Import MembershipService เข้ามา
 import { MembershipService } from '../membership/membership.service'; 
 
