@@ -44,6 +44,12 @@ User → Membership → Organization
 `User` แทนข้อมูลของผู้ใช้งานในระบบ
 
 ผู้ใช้สามารถเข้าร่วมหลาย organization ผ่าน membership
+- สร้าง อ่าน แก้ไข และลบผู้ใช้ (CRUD)
+- ค้นหาผู้ใช้โดยใช้ filter เช่น
+    - `username`
+    - `email`
+    - `status`
+    - `role`
 
 ## Properties
 
@@ -69,6 +75,8 @@ User → Membership → Organization
 # Organization
 
 `Organization` แทนข้อมูลขององค์กรหรือกลุ่มที่ผู้ใช้สามารถเข้าร่วมได้
+- รองรับการทำ CRUD สำหรับองค์กร
+- สารารถดูสมาชิกทั้งหมดขององค์กร พร้อมข้อมูลผู้ใช้ได้
 
 ## Properties
 
@@ -94,6 +102,10 @@ User → Membership → Organization
 `Membership` ใช้จัดการความสัมพันธ์ระหว่าง **User และ Organization**
 
 Membership เก็บข้อมูลเกี่ยวกับการเป็นสมาชิก เช่น role และสถานะของสมาชิก
+- เพิ่ม / ลบ / แก้ไข membership ของผู้ใช้ในองค์กร
+- สามารถดึงข้อมูล membership ตาม user หรือ organization ได้
+- ป้องกันการสร้าง membership ซ้ำ
+
 
 ## Properties
 
