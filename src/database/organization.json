@@ -15,14 +15,14 @@
   {
     "id": "b2c5d8e1-9f4a-4b6c-8e2d-7f1a3b5c9d0e",
     "createdAt": "2026-03-01T12:15:00.000Z",
-    "updatedAt": "2026-03-08T06:41:28.065Z",
+    "updatedAt": "2026-03-01T12:15:00.000Z",
     "name": "GreenLeaf Solutions",
     "domain": "greenleaf.co",
     "ownerId": "c2c93d42-0e5f-4b7c-9d3e-4e6f8a0b2c3d",
     "email": "contact@greenleaf.co",
     "phone": "+44-20-7946-0958",
     "address": "Shoreditch High St, London, UK",
-    "plan": "Enterprise",
+    "plan": "enterprise",
     "status": "ACTIVE"
   },
   {
@@ -36,6 +36,19 @@
     "phone": "+49-30-12345678",
     "address": "Mitte, Berlin, Germany",
     "plan": "pro",
+    "status": "ACTIVE"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d",
+    "createdAt": "2026-03-01T12:45:00.000Z",
+    "updatedAt": "2026-03-01T12:45:00.000Z",
+    "name": "Stellar Apps",
+    "domain": "stellarapps.dev",
+    "ownerId": "e4e15f64-2a7b-4d9e-bf5a-6a8b0c2d4e5f",
+    "email": "support@stellarapps.dev",
+    "phone": "+1-512-555-0133",
+    "address": "Congress Ave, Austin, TX, USA",
+    "plan": "free",
     "status": "ACTIVE"
   },
   {
