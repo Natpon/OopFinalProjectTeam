@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Patch, Param, Delete, Query } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -36,6 +36,16 @@ async findOne(@Param('id') id: string): Promise<ApiResponse<UserResponseDto>> {
   return {
     success: true,
     message: 'User retrieved successfully',
+    data,
+  };
+}
+
+@Put(':id')
+async replace(@Param('id') id: string, @Body() dto: CreateUserDto): Promise<ApiResponse<UserResponseDto>> {
+  const data = await this.userService.update(id, dto);
+  return {
+    success: true,
+    message: 'User replaced successfully',
     data,
   };
 }

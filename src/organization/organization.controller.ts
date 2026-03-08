@@ -4,6 +4,7 @@ import {
   Controller,
   Get,
   Post,
+  Put,
   Patch,
   Delete,
   Param,
@@ -16,7 +17,9 @@ import { CreateOrganizationDto } from './dto/create-organization.dto';
 import { UpdateOrganizationDto } from './dto/update-organization.dto';
 import { Organization } from './entities/organization.entity';
 import { UserService } from '@/user/user.service';
-import { ApiResponse } from '@/common/interfaces/api-response.interface';
+import { ApiResponse } from '../common/interfaces/api-response.interface';
+
+// 🌟 1. Import MembershipService เข้ามา
 import { MembershipService } from '../membership/membership.service'; 
 
 @Controller('organization')
@@ -90,7 +93,27 @@ async getMembers(@Param('id') id: string) {
     };
   }
 
-  
+  /**
+   * PUT /organizations/:id
+   * Fully replaces an existing organization.
+   */
+  @Put(':id')
+  async replace(
+    @Param('id') id: string,
+    @Body() createOrganizationDto: CreateOrganizationDto,
+  ): Promise<ApiResponse<Organization>> {
+    const data = await this.organizationService.update(id, createOrganizationDto);
+    return {
+      success: true,
+      message: 'Organization replaced successfully',
+      data,
+    };
+  }
+
+  /**
+   * PATCH /organizations/:id
+   * Partially updates an existing organization.
+   */
   @Patch(':id')
   async update(
     @Param('id') id: string,
