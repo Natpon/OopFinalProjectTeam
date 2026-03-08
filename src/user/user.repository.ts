@@ -20,11 +20,6 @@ export class UserRepository {
     );
   }
 
-  /*async save(user: User): Promise<void> {
-    const users = await this.findAll();
-    users.push(user);
-    await this.writeAll(users);
-  }*/
   async save(user: User): Promise<void> {
 
   console.log("saving user", user);
