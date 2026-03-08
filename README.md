@@ -7,11 +7,11 @@
 
 
 
-**How to run**
-*npm install*
-*npm run start:dev*
-**Swagger**
-*https://localhost:3000/api*
+##How to run##
+**npm install**
+**npm run start:dev**
+##Swagger##
+**https://localhost:3000/api**
 
 
 
