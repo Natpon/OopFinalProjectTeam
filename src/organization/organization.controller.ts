@@ -15,6 +15,7 @@ import { OrganizationService } from './organization.service';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
 import { UpdateOrganizationDto } from './dto/update-organization.dto';
 import { Organization } from './entities/organization.entity';
+import { ApiResponse } from '../common/interfaces/api-response.interface';
 
 // 🌟 1. Import MembershipService เข้ามา
 import { MembershipService } from '../membership/membership.service'; 
@@ -28,23 +29,37 @@ export class OrganizationController {
   ) {}
 
   @Get()
-  async findAll(): Promise<Organization[]> {
-    return this.organizationService.findAll();
+  async findAll(): Promise<ApiResponse<Organization[]>> {
+    const data = await this.organizationService.findAll();
+    return {
+      success: true,
+      message: 'Organizations retrieved successfully',
+      data,
+    };
   }
 
   // 🌟 3. เพิ่ม Endpoint สำหรับดึงสมาชิกขององค์กร
   @Get(':id/members')
-  async getMembers(@Param('id') id: string) {
+  async getMembers(@Param('id') id: string): Promise<ApiResponse<any[]>> {
     console.log(`fetching members for organization: ${id}`);
     
     // โยน organizationId ไปให้ MembershipService จัดการค้นหา
-    const members = await this.membershipService.listOrganizationMembers(id);
-    return members;
+    const data = await this.membershipService.listOrganizationMembers(id);
+    return {
+      success: true,
+      message: 'Organization members retrieved successfully',
+      data,
+    };
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<Organization> {
-    return this.organizationService.findOne(id);
+  async findOne(@Param('id') id: string): Promise<ApiResponse<Organization>> {
+    const data = await this.organizationService.findOne(id);
+    return {
+      success: true,
+      message: 'Organization retrieved successfully',
+      data,
+    };
   }
 
   /**
@@ -55,8 +70,13 @@ export class OrganizationController {
   @HttpCode(HttpStatus.CREATED)
   async create(
     @Body() createOrganizationDto: CreateOrganizationDto,
-  ): Promise<Organization> {
-    return this.organizationService.create(createOrganizationDto);
+  ): Promise<ApiResponse<Organization>> {
+    const data = await this.organizationService.create(createOrganizationDto);
+    return {
+      success: true,
+      message: 'Organization created successfully',
+      data,
+    };
   }
 
   /**
@@ -67,8 +87,13 @@ export class OrganizationController {
   async update(
     @Param('id') id: string,
     @Body() updateOrganizationDto: UpdateOrganizationDto,
-  ): Promise<Organization> {
-    return this.organizationService.update(id, updateOrganizationDto);
+  ): Promise<ApiResponse<Organization>> {
+    const data = await this.organizationService.update(id, updateOrganizationDto);
+    return {
+      success: true,
+      message: 'Organization updated successfully',
+      data,
+    };
   }
 
   /**
@@ -77,7 +102,12 @@ export class OrganizationController {
    */
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
-  async remove(@Param('id') id: string): Promise<{ message: string }> {
-    return this.organizationService.remove(id);
+  async remove(@Param('id') id: string): Promise<ApiResponse<null>> {
+    const result = await this.organizationService.remove(id);
+    return {
+      success: true,
+      message: result.message,
+      data: null,
+    };
   }
 }

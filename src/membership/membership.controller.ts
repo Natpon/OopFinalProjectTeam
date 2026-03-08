@@ -3,28 +3,49 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { MembershipService } from './membership.service';
 import { CreateMembershipDto } from './dto/create-membership.dto';
 import { UpdateMembershipDto } from './dto/update-membership.dto';
+import { ApiResponse } from '../common/interfaces/api-response.interface';
 
 @Controller() 
 export class MembershipController {
   constructor(private readonly membershipService: MembershipService) {}
 
   @Post('memberships')
-  create(@Body() createMembershipDto: CreateMembershipDto) {
-    return this.membershipService.create(createMembershipDto);
+  async create(@Body() createMembershipDto: CreateMembershipDto): Promise<ApiResponse<any>> {
+    const data = await this.membershipService.create(createMembershipDto);
+    return {
+      success: true,
+      message: 'Membership created successfully',
+      data,
+    };
   }
 
   @Get('organizations/:id/members')
-  listOrganizationMembers(@Param('id') id: string) {
-    return this.membershipService.listOrganizationMembers(id);
+  async listOrganizationMembers(@Param('id') id: string): Promise<ApiResponse<any[]>> {
+    const data = await this.membershipService.listOrganizationMembers(id);
+    return {
+      success: true,
+      message: 'Organization members retrieved successfully',
+      data,
+    };
   }
 
   @Patch('memberships/:id')
-  update(@Param('id') id: string, @Body() updateMembershipDto: UpdateMembershipDto) {
-    return this.membershipService.update(id, updateMembershipDto);
+  async update(@Param('id') id: string, @Body() updateMembershipDto: UpdateMembershipDto): Promise<ApiResponse<any>> {
+    const data = await this.membershipService.update(id, updateMembershipDto);
+    return {
+      success: true,
+      message: 'Membership updated successfully',
+      data,
+    };
   }
 
   @Delete('memberships/:id')
-  remove(@Param('id') id: string) {
-    return this.membershipService.remove(id);
+  async remove(@Param('id') id: string): Promise<ApiResponse<null>> {
+    const result = await this.membershipService.remove(id);
+    return {
+      success: true,
+      message: result.message,
+      data: null,
+    };
   }
 }
