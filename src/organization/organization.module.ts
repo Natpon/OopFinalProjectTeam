@@ -3,7 +3,10 @@ import { OrganizationService } from './organization.service';
 import { OrganizationController } from './organization.controller';
 import { OrganizationRepository } from './organization.repository'; // <-- 1. Import it
 
+import { MembershipModule } from '@/membership/membership.module';
+
 @Module({
+  imports: [MembershipModule],
   controllers: [OrganizationController],
   providers: [
     OrganizationService, 

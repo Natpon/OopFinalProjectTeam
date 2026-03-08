@@ -16,23 +16,32 @@ import { CreateOrganizationDto } from './dto/create-organization.dto';
 import { UpdateOrganizationDto } from './dto/update-organization.dto';
 import { Organization } from './entities/organization.entity';
 
+// 🌟 1. Import MembershipService เข้ามา
+import { MembershipService } from '../membership/membership.service'; 
+
 @Controller('organization')
 export class OrganizationController {
-  constructor(private readonly organizationService: OrganizationService) {}
+  constructor(
+    private readonly organizationService: OrganizationService,
+    // 🌟 2. Inject MembershipService เข้ามาใช้งาน
+    private readonly membershipService: MembershipService, 
+  ) {}
 
-  /**
-   * GET /organizations
-   * Returns all organizations.
-   */
   @Get()
   async findAll(): Promise<Organization[]> {
     return this.organizationService.findAll();
   }
 
-  /**
-   * GET /organizations/:id
-   * Returns a single organization by ID.
-   */
+  // 🌟 3. เพิ่ม Endpoint สำหรับดึงสมาชิกขององค์กร
+  @Get(':id/members')
+  async getMembers(@Param('id') id: string) {
+    console.log(`fetching members for organization: ${id}`);
+    
+    // โยน organizationId ไปให้ MembershipService จัดการค้นหา
+    const members = await this.membershipService.listOrganizationMembers(id);
+    return members;
+  }
+
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<Organization> {
     return this.organizationService.findOne(id);
