@@ -20,6 +20,6 @@
 *  **Data Model Documentation** — รายละเอียดโปรเจค
   → [`DATA PROJECT`](docs/data-model.md)
 *  **UML Diagram** — แผนภาพ UML ของ Data
-  → [`UML Diagram`](docs/uml)
+  → [`UML Diagram`](docs/uml.png)
 *  **API Specification** — เอากสาร API
   → [`API Specification`](docs/api.md)
